@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 95031318057472214}
   - component: {fileID: 54744225203553018}
   m_Layer: 0
-  m_Name: Personaje_Good02
+  m_Name: Personaje_Good03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c14caef5050207e46a7664400a90ae60, type: 2}
+  - {fileID: 2100000, guid: c67b9efc5bbb08148ad40e41c21f644c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
