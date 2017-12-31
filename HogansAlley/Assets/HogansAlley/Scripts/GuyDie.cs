@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GuyDie : MonoBehaviour {
 
-    Animator anim;
+    public Animator anim;
 
     public float minStayTime = 3f;
     public float maxStayTime = 5f;
@@ -19,7 +19,7 @@ public class GuyDie : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         if(anim == null)
         {
             Debug.Log("No encuentra el animator");
@@ -31,31 +31,37 @@ public class GuyDie : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Time.realtimeSinceStartup >= (timeZero + waitTime))
+		if ((Time.realtimeSinceStartup >= (timeZero + waitTime)) && (this.enabled))
         {
             anim.SetTrigger("EndNow");
             GameplayManager.GetInstance().points += this.pointsMiss;
             this.enabled = false;
+
+            Debug.Log("Elapsed time greater than waiting time");
         }
 	}
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Bala(Clone)")
+        if ((collision.gameObject.name == "Bala(Clone)") && (this.enabled))
         {
             anim.SetTrigger("EndNow");
             GameplayManager.GetInstance().points += this.pointsHit;
             this.enabled = false;
+            
+            Debug.Log("Collision");
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Bala(Clone)")
         {
             anim.SetTrigger("EndNow");
             GameplayManager.GetInstance().points += this.pointsHit;
             this.enabled = false;
+            
+            Debug.Log("Collision");
         }
-    }
+    }*/
 }

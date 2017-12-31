@@ -29,7 +29,11 @@ public class PeopleSpawner : MonoBehaviour {
         while(!stop)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
-            Instantiate(PersonTypes[Random.Range(0, PersonTypes.Length)], SpawnPoints[Random.Range(0, SpawnPoints.Length)].transform);
+
+            int personType = Random.Range(0, PersonTypes.Length);
+            int spawnPoint = Random.Range(0, SpawnPoints.Length);
+            Transform spawnTransform = SpawnPoints[spawnPoint].transform;
+            Instantiate(PersonTypes[personType], spawnTransform);
         }
     }
 

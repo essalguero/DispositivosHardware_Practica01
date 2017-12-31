@@ -27,6 +27,7 @@ public class BulletHandler : MonoBehaviour {
         }
 
         bulletAS = GetComponent<AudioSource>();
+        if (bulletAS == null)
         {
             Debug.Log("No se encuentra el AudioSource de la bala");
         }

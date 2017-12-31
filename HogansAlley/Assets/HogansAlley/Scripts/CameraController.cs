@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour {
             CameraPosition();
         }
 
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             ShootABullet();
         }
@@ -30,13 +30,19 @@ public class CameraController : MonoBehaviour {
 
     void CameraPosition()
     {
+        // Calcular la diferencia desde la última posición del ratón con la posición actual
         Vector3 deltaMouse = Input.mousePosition - lastMouse;
 
+        // Cambiado el orden del parametro porque se tiene en cuenta el eje sobre el que se rota
         Vector3 newMouse = new Vector3(-deltaMouse.y * camSens, deltaMouse.x * camSens, 0);
+
+
         Vector3 newMousePosition = new Vector3(transform.eulerAngles.x + newMouse.x, transform.eulerAngles.y + newMouse.y, 0);
 
+        // Le asigna a la camara los angulos calculados
         transform.eulerAngles = newMousePosition;
 
+        // Guarda la posicion actual para compararla luego
         lastMouse = Input.mousePosition;
 
     }

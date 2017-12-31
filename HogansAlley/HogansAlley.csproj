@@ -231,9 +231,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GameplayManager.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\BulletHandler.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\CameraController.cs" />
+    <Compile Include="Assets\HogansAlley\Scripts\DestroyScript.cs" />
+    <Compile Include="Assets\HogansAlley\Scripts\GameplayManager.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\GuyDie.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\PeopleSpawner.cs" />
   </ItemGroup>
