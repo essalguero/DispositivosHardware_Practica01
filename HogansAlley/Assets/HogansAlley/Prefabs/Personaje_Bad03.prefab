@@ -189,5 +189,5 @@ MonoBehaviour:
   anim: {fileID: 95031318057472214}
   minStayTime: 3
   maxStayTime: 5
-  pointsHit: 0
-  pointsMiss: 0
+  pointsHit: 100
+  pointsMiss: -100
