@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletHandler : MonoBehaviour {
 
-    private ParticleSystem hitPs;
+    public ParticleSystem hitPs;
     private Rigidbody rb;
     private AudioSource bulletAS;
 
@@ -14,7 +14,7 @@ public class BulletHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        hitPs = GetComponent<ParticleSystem>();
+        //hitPs = GetComponent<ParticleSystem>();
         if (hitPs == null)
         {
             Debug.Log("No se encuentra el ParticleSystem de la bala");
