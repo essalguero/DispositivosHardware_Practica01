@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/HogansAlley/Scenes/SceneMenu.unity
+    guid: 3d13011e80f36f34a866cee713a0e3e1
+  - enabled: 1
+    path: Assets/HogansAlley/Scenes/Scene01.unity
+    guid: f2fe31f1a8bc37e4abebc3dd27bbd813
