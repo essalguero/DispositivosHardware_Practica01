@@ -60,11 +60,6 @@ public class PeopleSpawner : MonoBehaviour {
         }
     }
 
-    // Stop spawning people
-    public void Stop()
-    {
-        stop = true;
-    }
 
     // Return the instance of the singleton
     public static PeopleSpawner GetInstance()

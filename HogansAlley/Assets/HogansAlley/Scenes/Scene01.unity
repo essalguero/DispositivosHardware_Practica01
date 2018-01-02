@@ -128,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &404936802
 Transform:
   m_ObjectHideFlags: 0
@@ -432,9 +432,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3acd029c933b6428e20babc87153c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playingTime: 60
+  playingTime: 10
   textMesh: {fileID: 848980806}
   points: 0
+  PersonTypes:
+  - {fileID: 1343928403266222, guid: bf71ba64714355f4593ad06aa2feab97, type: 2}
+  - {fileID: 1343928403266222, guid: 1951d6f2513f83b4bb2655bbf2581c6b, type: 2}
+  - {fileID: 1343928403266222, guid: 6d8761b0ba586224f847dd533eacbe31, type: 2}
+  - {fileID: 1343928403266222, guid: 59c4550a5a1ace947b18f8013530022b, type: 2}
+  - {fileID: 1343928403266222, guid: 1642ae5d81fb3924a8164b692ba90041, type: 2}
+  - {fileID: 1343928403266222, guid: dfbab4e7dc8f39b41bb898717f348276, type: 2}
+  minSpawnTime: 1
+  maxSpawnTime: 5
 --- !u!4 &1360943892
 Transform:
   m_ObjectHideFlags: 0

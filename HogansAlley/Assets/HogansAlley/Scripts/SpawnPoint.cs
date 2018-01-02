@@ -4,18 +4,8 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour {
 
-    /*private void Awake()
-    {
-        PeopleSpawner.GetInstance().AddSpawnPoint(gameObject);
-    }*/
-
-    // Use this for initialization
+    // Use this for initialization. The spawnPoint subscribe itself to the list of available SpawnPoints
     void Start () {
-		PeopleSpawner.GetInstance().AddSpawnPoint(gameObject);
+		GameplayManager.GetInstance().AddSpawnPoint(gameObject);
 	}
-	
-	/*// Update is called once per frame
-	void Update () {
-		
-	}*/
 }

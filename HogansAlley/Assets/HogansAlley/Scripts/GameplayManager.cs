@@ -18,17 +18,69 @@ public class GameplayManager : MonoBehaviour {
     // Points the user is scoring in the current game
     public float points = 0f;
 
-	// Use this for initialization
-	void Start () {
 
-        timeZero = Time.realtimeSinceStartup;
+    // Variables needed to Spawn Characters
+
+    // Type of Character that can be used during the game
+    [SerializeField]
+    GameObject[] PersonTypes;
+
+    // Time range to define the min and max time elapsed before spawning a new character
+    public float minSpawnTime = 4f;
+    public float maxSpawnTime = 6f;
+
+    // Controls the status of the game. Set to true once the game is finished
+    private bool stop = false;
+
+    // List of SpawnPoints registered (Observer Pattern)
+    private List<GameObject> spawnPointsList = new List<GameObject>();
+
+    // Sets the instance for the Singleton pattern
+    private void Awake()
+    {
+        // If another instance of the objects exists (Not possible because it implements a Singleton) this object is destroyed
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         // Initialize the instance for the Singleton Pattern
         instance = this;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Use this for initialization
+    void Start () {
+
+        timeZero = Time.realtimeSinceStartup;
+
+        // Starts coroutine to spawn characters
+        StartCoroutine(SpawnPeople());
+    }
+
+    // Coroutine that controls the instantiation of Characters
+    IEnumerator SpawnPeople()
+    {
+        // Only spawn people while the variable stop is set to false
+        while (!stop)
+        {
+            // Wait a random number of seconds before spawning a character
+            yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
+
+            // Select the character to be spawned
+            int personType = Random.Range(0, PersonTypes.Length);
+
+            // Select randomly the SpawnPoint where the character will be placed
+            int spawnPoint = Random.Range(0, spawnPointsList.Count);
+            Transform spawnTransform = spawnPointsList[spawnPoint].transform;
+
+            // Spawn the character - Instantiate
+            Instantiate(PersonTypes[personType], spawnTransform);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		if (Time.realtimeSinceStartup > (playingTime + timeZero))
         {
             // Once the playing time is over, the application returns to the menu screen
@@ -47,4 +99,17 @@ public class GameplayManager : MonoBehaviour {
     {
         return instance;
     }
+
+    // The SpawnPoints to be used during the game must register themselves (Observer Pattern)
+    public void AddSpawnPoint(GameObject spawnPoint)
+    {
+        spawnPointsList.Add(spawnPoint);
+    }
+    
+    // Stop spawning people
+    public void Stop()
+    {
+        stop = true;
+    }
+
 }
