@@ -5,29 +5,38 @@ using UnityEngine.XR;
 
 public class CameraController : MonoBehaviour {
 
-    public float camSens = 0.5f; // Como de sensible es el raton
+    // Time that each bullet will be kept before deleting it
+    private const float LIFE_TIME = 3f;
+
+    // Como de sensible es el raton
+    public float camSens = 0.5f;
+
+    // Keeps the last position of the mouse
     Vector3 lastMouse = new Vector3(255, 255, 255);
+
+    // Prefab for the bullets
     [SerializeField]
     GameObject bullet;
 
-    // Use this for initialization
-    void Start() {
-
-    }
 
     // Update is called once per frame
     void Update () {
+
+        // Check if the VR device is connected. If it is NOT connected, rotate the camera using the mouse
 		if(!XRSettings.enabled)
         {
             CameraPosition();
         }
 
+        // Shoot when the button Fire1 is pressed. It will be needed to release the button and press it
+        // again to Shoot again
         if (Input.GetButtonDown("Fire1"))
         {
             ShootABullet();
         }
 	}
 
+    // Set the direction where the camera is pointing to
     void CameraPosition()
     {
         // Calcular la diferencia desde la última posición del ratón con la posición actual
@@ -47,6 +56,7 @@ public class CameraController : MonoBehaviour {
 
     }
 
+    // Shoot. Create a bullet and also destroys it after LIFE_TIME seconds
     void ShootABullet()
     {
         GameObject bala = Instantiate(bullet, transform.position, transform.rotation);
@@ -61,6 +71,7 @@ public class CameraController : MonoBehaviour {
             Debug.Log("La bala no tiene el script BulletHandler");
         }
 
-        Destroy(bala, 3f);
+        // Destroy the bullet when the LIFE_TIME has expired
+        Destroy(bala, LIFE_TIME);
     }
 }

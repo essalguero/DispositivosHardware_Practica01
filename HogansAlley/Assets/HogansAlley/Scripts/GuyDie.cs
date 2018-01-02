@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class GuyDie : MonoBehaviour {
 
+    // Animator to control the animations of the characters
     public Animator anim;
 
+    // Time the character will be on the screen
     public float minStayTime = 3f;
     public float maxStayTime = 5f;
+
+    // Points the user will get if the character is hit. Negative value for "friendly" people
     public float pointsHit = 0f;
     public float pointsMiss = 0f;
 
+    // Variables controlling the time the character is on the screen
     private float timeZero = 0f;
     private float waitTime = 0f;
 
@@ -19,49 +24,56 @@ public class GuyDie : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //anim = GetComponent<Animator>();
+        
+        // Check there is an animator available
         if(anim == null)
         {
             Debug.Log("No encuentra el animator");
         }
 
+        // Initialize timeZero with the time when the character was created
         timeZero = Time.realtimeSinceStartup;
+
+        // Get how much time the character will be on the screen if not hit first
         waitTime = Random.Range(minStayTime, maxStayTime);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if ((Time.realtimeSinceStartup >= (timeZero + waitTime)) && (this.enabled))
+        // The character has to be enabled to take into account the collision. If the elapsed time since the character was instantiated is
+        // greated than the waiting time, the character dissapears
+        if ((Time.realtimeSinceStartup >= (timeZero + waitTime)) && (this.enabled))
         {
+            // Triggers the corresponding animation
             anim.SetTrigger("EndNow");
+
+            // Add the corresponding points
             GameplayManager.GetInstance().points += this.pointsMiss;
+
+            // Set this character as not enabled
             this.enabled = false;
 
             Debug.Log("Elapsed time greater than waiting time");
         }
 	}
 
+    // Detects collisions with other objects
     void OnCollisionEnter(Collision collision)
     {
+        // Only take into account collisions with objects of type Bala. Also this character has to be enabled to take into account the collision
         if ((collision.gameObject.name == "Bala(Clone)") && (this.enabled))
         {
+            // Triggers the corresponding animation
             anim.SetTrigger("EndNow");
+
+            // Add the corresponding points
             GameplayManager.GetInstance().points += this.pointsHit;
+
+            // Set this character as not enabled
             this.enabled = false;
             
             Debug.Log("Collision");
         }
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Bala(Clone)")
-        {
-            anim.SetTrigger("EndNow");
-            GameplayManager.GetInstance().points += this.pointsHit;
-            this.enabled = false;
-            
-            Debug.Log("Collision");
-        }
-    }*/
+    
 }
