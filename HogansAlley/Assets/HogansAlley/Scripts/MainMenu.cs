@@ -70,33 +70,6 @@ public class MainMenu : MonoBehaviour {
                 }
             }
 
-           /* if (scoreList[scoreList.Count - 1] == float.MinValue)
-            {
-                scoreTextFields[0].text = "1. -";
-            }
-            else
-            {
-                scoreTextFields[0].text = "1. " + scoreList[scoreList.Count - 1].ToString();
-            }
-
-            if (scoreList[scoreList.Count - 2] == float.MinValue)
-            {
-                scoreTextFields[1].text = "2. -";
-            }
-            else
-            {
-                scoreTextFields[1].text = "2. " + scoreList[scoreList.Count - 2].ToString();
-            }
-
-            if (scoreList[scoreList.Count - 3] == float.MinValue)
-            {
-                scoreTextFields[2].text = "3. -";
-            }
-            else
-            {
-                scoreTextFields[2].text = "3. " + scoreList[scoreList.Count - 3].ToString();
-            }*/
-
             // Marks that the list has been updated already
             updated = false;
         }

@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour {
     // Keeps the last position of the mouse
     Vector3 lastMouse = new Vector3(255, 255, 255);
 
-    // Prefab for the bullets
+    // Prefab for the bullets /*It is not used anymore as RayCasting is used for shooting*/
     [SerializeField]
     GameObject bullet;
 
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour {
         // Cambiado el orden del parametro porque se tiene en cuenta el eje sobre el que se rota
         Vector3 newMouse = new Vector3(-deltaMouse.y * camSens, deltaMouse.x * camSens, 0);
 
-
+        // Obtener la nueva posicion
         Vector3 newMousePosition = new Vector3(transform.eulerAngles.x + newMouse.x, transform.eulerAngles.y + newMouse.y, 0);
 
         // Le asigna a la camara los angulos calculados
@@ -74,6 +74,10 @@ public class CameraController : MonoBehaviour {
     // Shoot. Create a bullet and also destroys it after LIFE_TIME seconds
     void ShootABullet()
     {
+
+        /* This was used when shooting bullets. It is kept only for completeness
+         */
+
         /*GameObject bala = Instantiate(bullet, transform.position, transform.rotation);
 
         BulletHandler bh = bala.GetComponent<BulletHandler>();
@@ -90,24 +94,34 @@ public class CameraController : MonoBehaviour {
         Destroy(bala, LIFE_TIME);*/
 
 
+        // Cast a Ray and store the object it hits
         RaycastHit shootHit;
-        Ray shootRay = new Ray();
-
-        shootRay.origin = cameraTransform.position;
-        shootRay.direction = cameraTransform.forward;
+        Ray shootRay = new Ray()
+        {
+            origin = cameraTransform.position,
+            direction = cameraTransform.forward
+        };
 
         Physics.Raycast(shootRay, out shootHit, 200f);
+
+        // Play shot AudioClip
         audioSource.PlayOneShot(shootSound);
 
         Debug.Log("Shoting Rays");
+
+        // Play the Particle System
         ps.Play();
+
+        // Check if the Ray hits any object
         if (shootHit.collider != null)
         {
-            
+            // Play the Hit AudioClip
             audioSource.PlayOneShot(hitSound);
 
+            // Check if the object it hits is any of the characters
             if (shootHit.collider.gameObject.tag == "Character")
             {
+                // Call the character hit method to add the points and to stop the animation
                 shootHit.collider.gameObject.GetComponent<GuyDie>().Hit();
                 Debug.Log("Character reached");
             }

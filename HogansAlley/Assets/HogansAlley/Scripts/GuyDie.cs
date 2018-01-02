@@ -19,7 +19,8 @@ public class GuyDie : MonoBehaviour {
     private float timeZero = 0f;
     private float waitTime = 0f;
 
-    public delegate void ShootEventHandler();
+    // Added Delegate method and event for the budguys to be able to shoot
+    public delegate void ShootEventHandler(float points);
     public event ShootEventHandler OnShoot;
 
 	// Use this for initialization
@@ -47,8 +48,12 @@ public class GuyDie : MonoBehaviour {
             // Triggers the corresponding animation
             anim.SetTrigger("EndNow");
 
-            // Add the corresponding points
-            GameplayManager.GetInstance().points += this.pointsMiss;
+            // Raise the event OnShoot if there is any subscriber
+            if (OnShoot != null)
+            {
+                OnShoot(pointsMiss);
+            }
+
 
             // Set this character as not enabled
             this.enabled = false;
@@ -57,7 +62,27 @@ public class GuyDie : MonoBehaviour {
         }
 	}
 
-    // Detects collisions with other objects
+    /* This method is now used to add the points to the score if a ray casted hits the character. It is also in charge of change the animation
+     * from waiting to hiding
+     * 
+     * This method replaces the OnCollisionEnter used when the user was shooting bullets. The OnCollisionEnter method is commented at the end of this file
+     * for completeness
+    */
+    public void Hit()
+    {
+        // Triggers the corresponding animation
+        anim.SetTrigger("EndNow");
+
+        // Add the corresponding points
+        GameplayManager.GetInstance().points += this.pointsHit;
+
+        // Set this character as not enabled
+        this.enabled = false;
+
+        Debug.Log("Collision");
+    }
+
+    /*// Detects collisions with other objects
     void OnCollisionEnter(Collision collision)
     {
         // Only take into account collisions with objects of type Bala. Also this character has to be enabled to take into account the collision
@@ -74,38 +99,9 @@ public class GuyDie : MonoBehaviour {
             
             Debug.Log("Collision");
         }
-    }
+    }*/
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // Only take into account collisions with objects of type Bala. Also this character has to be enabled to take into account the collision
-        if ((other.gameObject.name == "Bala(Clone)") && (this.enabled))
-        {
-            // Triggers the corresponding animation
-            anim.SetTrigger("EndNow");
+    
 
-            // Add the corresponding points
-            GameplayManager.GetInstance().points += this.pointsHit;
-
-            // Set this character as not enabled
-            this.enabled = false;
-
-            Debug.Log("Collision");
-        }
-    }
-
-    public void Hit()
-    {
-        // Triggers the corresponding animation
-        anim.SetTrigger("EndNow");
-
-        // Add the corresponding points
-        GameplayManager.GetInstance().points += this.pointsHit;
-
-        // Set this character as not enabled
-        this.enabled = false;
-
-        Debug.Log("Collision");
-    }
 
 }

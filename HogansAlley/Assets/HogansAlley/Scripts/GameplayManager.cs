@@ -75,8 +75,21 @@ public class GameplayManager : MonoBehaviour {
             Transform spawnTransform = spawnPointsList[spawnPoint].transform;
 
             // Spawn the character - Instantiate
-            Instantiate(PersonTypes[personType], spawnTransform);
+            GameObject character = (GameObject) Instantiate(PersonTypes[personType], spawnTransform);
+
+            // If the character creater is bad, register the function BadGuyShoot in the event OnShoot (delegates) in GuyDie
+            if (PersonTypes[personType].name.ToLower().Contains("bad"))
+            {
+                GuyDie gdScript = character.GetComponentInChildren<GuyDie>();
+                gdScript.OnShoot += BadGuyShoot;
+            }
         }
+    }
+
+    // Function to be called when the badguys shot. It is called using a delegate function and an event in GuyDie
+    private void BadGuyShoot(float shootPoints)
+    {
+        points += shootPoints;
     }
 
     // Update is called once per frame
