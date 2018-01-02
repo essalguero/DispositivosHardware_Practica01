@@ -8,8 +8,14 @@ public class CameraController : MonoBehaviour {
     // Time that each bullet will be kept before deleting it
     private const float LIFE_TIME = 3f;
 
+    private ParticleSystem ps;
+    private AudioSource audioSource;
+
     // Como de sensible es el raton
     public float camSens = 0.5f;
+
+    public AudioClip shootSound;
+    public AudioClip hitSound;
 
     // Keeps the last position of the mouse
     Vector3 lastMouse = new Vector3(255, 255, 255);
@@ -18,6 +24,15 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     GameObject bullet;
 
+    Transform cameraTransform;
+
+    private void Start()
+    {
+        cameraTransform = this.GetComponent<Transform>();
+
+        ps = GetComponent<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update () {
@@ -59,7 +74,7 @@ public class CameraController : MonoBehaviour {
     // Shoot. Create a bullet and also destroys it after LIFE_TIME seconds
     void ShootABullet()
     {
-        GameObject bala = Instantiate(bullet, transform.position, transform.rotation);
+        /*GameObject bala = Instantiate(bullet, transform.position, transform.rotation);
 
         BulletHandler bh = bala.GetComponent<BulletHandler>();
         if (bh != null)
@@ -72,6 +87,30 @@ public class CameraController : MonoBehaviour {
         }
 
         // Destroy the bullet when the LIFE_TIME has expired
-        Destroy(bala, LIFE_TIME);
+        Destroy(bala, LIFE_TIME);*/
+
+
+        RaycastHit shootHit;
+        Ray shootRay = new Ray();
+
+        shootRay.origin = cameraTransform.position;
+        shootRay.direction = cameraTransform.forward;
+
+        Physics.Raycast(shootRay, out shootHit, 200f);
+        audioSource.PlayOneShot(shootSound);
+
+        Debug.Log("Shoting Rays");
+        ps.Play();
+        if (shootHit.collider != null)
+        {
+            
+            audioSource.PlayOneShot(hitSound);
+
+            if (shootHit.collider.gameObject.tag == "Character")
+            {
+                shootHit.collider.gameObject.GetComponent<GuyDie>().Hit();
+                Debug.Log("Character reached");
+            }
+        }
     }
 }

@@ -75,5 +75,37 @@ public class GuyDie : MonoBehaviour {
             Debug.Log("Collision");
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Only take into account collisions with objects of type Bala. Also this character has to be enabled to take into account the collision
+        if ((other.gameObject.name == "Bala(Clone)") && (this.enabled))
+        {
+            // Triggers the corresponding animation
+            anim.SetTrigger("EndNow");
+
+            // Add the corresponding points
+            GameplayManager.GetInstance().points += this.pointsHit;
+
+            // Set this character as not enabled
+            this.enabled = false;
+
+            Debug.Log("Collision");
+        }
+    }
+
+    public void Hit()
+    {
+        // Triggers the corresponding animation
+        anim.SetTrigger("EndNow");
+
+        // Add the corresponding points
+        GameplayManager.GetInstance().points += this.pointsHit;
+
+        // Set this character as not enabled
+        this.enabled = false;
+
+        Debug.Log("Collision");
+    }
+
 }
