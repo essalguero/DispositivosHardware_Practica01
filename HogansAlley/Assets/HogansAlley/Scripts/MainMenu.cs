@@ -94,6 +94,11 @@ public class MainMenu : MonoBehaviour {
         updated = true;
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
     // Return the Singleton instance
     public static MainMenu GetInstance()
     {
