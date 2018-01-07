@@ -125,6 +125,10 @@ public class CameraController : MonoBehaviour {
                 shootHit.collider.gameObject.GetComponent<GuyDie>().Hit();
                 Debug.Log("Character reached");
             }
+            else if (shootHit.collider.gameObject.tag == "Bullseye")
+            {
+                shootHit.collider.gameObject.GetComponent<CambioPosicionCamara>().Hit();
+            }
         }
     }
 }

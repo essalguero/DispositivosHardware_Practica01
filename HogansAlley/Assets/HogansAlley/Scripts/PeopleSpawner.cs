@@ -42,8 +42,8 @@ public class PeopleSpawner : MonoBehaviour {
     // Coroutine that controls the instantiation of Characters
     IEnumerator SpawnPeople()
     {
-        // Only spawn people while the variable stop is set to false
-        while(!stop)
+       // Only spawn people while the variable stop is set to false
+        while (!stop)
         {
             // Wait a random number of seconds before spawning a character
             yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
@@ -57,6 +57,8 @@ public class PeopleSpawner : MonoBehaviour {
 
             // Spawn the character - Instantiate
             Instantiate(PersonTypes[personType], spawnTransform);
+
+            
         }
     }
 
@@ -72,4 +74,9 @@ public class PeopleSpawner : MonoBehaviour {
     {
         spawnPointsList.Add(spawnPoint);
     }
+
+    /*public void RemoveSpawnPoint(GameObject spawnPoint)
+    {
+        spawnPointsList.Remove(spawnPoint);
+    }*/
 }

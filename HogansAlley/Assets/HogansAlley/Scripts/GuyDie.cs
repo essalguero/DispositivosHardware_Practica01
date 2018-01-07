@@ -23,6 +23,18 @@ public class GuyDie : MonoBehaviour {
     public delegate void ShootEventHandler(float points);
     public event ShootEventHandler OnShoot;
 
+    private GameObject spawnPoint;
+
+    public GameObject GetSpawnPoint()
+    {
+        return spawnPoint;
+    }
+
+    public void setSpawmPoint(GameObject sPoint)
+    {
+        spawnPoint = sPoint;
+    }
+
 	// Use this for initialization
 	void Start () {
         
@@ -59,6 +71,8 @@ public class GuyDie : MonoBehaviour {
             this.enabled = false;
 
             Debug.Log("Elapsed time greater than waiting time");
+
+            
         }
 	}
 
@@ -80,6 +94,8 @@ public class GuyDie : MonoBehaviour {
         this.enabled = false;
 
         Debug.Log("Collision");
+
+        
     }
 
     /*// Detects collisions with other objects
@@ -101,7 +117,10 @@ public class GuyDie : MonoBehaviour {
         }
     }*/
 
-    
 
+    public void OnDestroy()
+    {
+        GameplayManager.GetInstance().Finished(this);
+    }
 
 }

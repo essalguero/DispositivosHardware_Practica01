@@ -12,6 +12,9 @@ public class GameplayManager : MonoBehaviour {
     private float timeZero;
     public float playingTime = 60f;
 
+    // Camera transform
+    public Transform cameraTransform;
+
     // TextMesh showing the score and the current playing time
     public TextMesh textMesh;
 
@@ -25,15 +28,24 @@ public class GameplayManager : MonoBehaviour {
     [SerializeField]
     GameObject[] PersonTypes;
 
+    [SerializeField]
+    public GameObject SpawPointsHolder;
+
     // Time range to define the min and max time elapsed before spawning a new character
     public float minSpawnTime = 4f;
     public float maxSpawnTime = 6f;
+
+    public Transform zonePosition;
+    public int minSpawnPoint;
+    public int maxSpawnPoint;
 
     // Controls the status of the game. Set to true once the game is finished
     private bool stop = false;
 
     // List of SpawnPoints registered (Observer Pattern)
     private List<GameObject> spawnPointsList = new List<GameObject>();
+
+    private List<GameObject> spawnPointInUseList = new List<GameObject>();
 
     // Sets the instance for the Singleton pattern
     private void Awake()
@@ -54,6 +66,9 @@ public class GameplayManager : MonoBehaviour {
 
         timeZero = Time.realtimeSinceStartup;
 
+        
+        setActiveZone(zonePosition, minSpawnPoint, maxSpawnPoint);
+
         // Starts coroutine to spawn characters
         StartCoroutine(SpawnPeople());
     }
@@ -69,20 +84,31 @@ public class GameplayManager : MonoBehaviour {
 
             // Select the character to be spawned
             int personType = Random.Range(0, PersonTypes.Length);
+            
+            int spawnPoint = 0;
+            do
+            {
+                // Select randomly the SpawnPoint where the character will be placed
+                spawnPoint = Random.Range(0, spawnPointsList.Count);
+            } while ((!spawnPointsList[spawnPoint].activeSelf) || (spawnPointInUseList.Contains(spawnPointsList[spawnPoint])));
 
-            // Select randomly the SpawnPoint where the character will be placed
-            int spawnPoint = Random.Range(0, spawnPointsList.Count);
+            spawnPointInUseList.Add(spawnPointsList[spawnPoint]);
+
             Transform spawnTransform = spawnPointsList[spawnPoint].transform;
 
             // Spawn the character - Instantiate
             GameObject character = (GameObject) Instantiate(PersonTypes[personType], spawnTransform);
 
+            GuyDie gdScript = character.GetComponentInChildren<GuyDie>();
+
             // If the character creater is bad, register the function BadGuyShoot in the event OnShoot (delegates) in GuyDie
             if (PersonTypes[personType].name.ToLower().Contains("bad"))
             {
-                GuyDie gdScript = character.GetComponentInChildren<GuyDie>();
+                
                 gdScript.OnShoot += BadGuyShoot;
             }
+
+            gdScript.setSpawmPoint(spawnPointsList[spawnPoint]);
         }
     }
 
@@ -123,6 +149,44 @@ public class GameplayManager : MonoBehaviour {
     public void Stop()
     {
         stop = true;
+    }
+
+    public void setActiveZone(Transform zoneTransform, int minSpawnPoint, int maxSpawnPoint)
+    {
+
+        cameraTransform.position = zoneTransform.position;
+
+        foreach (GameObject spawnPoint in spawnPointsList)
+        {
+            List<GameObject> childGameObjectList = new List<GameObject>(spawnPoint.transform.childCount);
+            if (childGameObjectList.Count > 0)
+                Debug.Log("This spawnPoint has children");
+
+            foreach (GameObject characterObject in childGameObjectList)
+            {
+                characterObject.SetActive(false);
+                DestroyImmediate(characterObject);
+            }
+
+            int valorSpawnPoint;
+            string stringNumeroSpawnPoint = spawnPoint.name.Substring(spawnPoint.tag.Length, 2);
+            int.TryParse(stringNumeroSpawnPoint, out valorSpawnPoint);
+
+            if (valorSpawnPoint < minSpawnPoint || valorSpawnPoint > maxSpawnPoint)
+            {
+                spawnPoint.SetActive(false);
+            }
+            else
+            {
+                spawnPoint.SetActive(true);
+            }
+        }
+
+    }
+
+    public void Finished(GuyDie guyDie)
+    {
+        spawnPointInUseList.Remove(guyDie.GetSpawnPoint());
     }
 
 }
