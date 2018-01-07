@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\HogansAlley\Scripts\BulletHandler.cs" />
+    <Compile Include="Assets\HogansAlley\Scripts\CambioPosicionCamara.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\CameraController.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\DestroyScript.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\GameplayManager.cs" />
@@ -239,6 +240,28 @@
     <Compile Include="Assets\HogansAlley\Scripts\MainMenu.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\PeopleSpawner.cs" />
     <Compile Include="Assets\HogansAlley\Scripts\SpawnPoint.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\EnemyPcController.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\MoveSnowBall.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\SantaController.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\SnowBallShooter.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Scripts\SnowManController.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Scripts\QuerySDController\QueryChanSapporoMecanimController.cs" />
+    <Compile Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Scripts\SceneController\GameSceneController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\ZRNAssets\006441_09646_1_1\Documents\ReadMe.txt" />
+    <None Include="Assets\ZRNAssets\006441_09646_1_1\Shaders\su_Zmap_DoubleSide.shader" />
+    <None Include="Assets\ZRNAssets\006441_09646_1_1\Shaders\su_Zmap_funsui.shader" />
+    <None Include="Assets\ZRNAssets\006441_09646_1_1\Shaders\su_Zmap_way.shader" />
+    <None Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Documents\ReadMe.txt" />
+    <None Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Shaders\PQ_Snow.shader" />
+    <None Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\Sapporo_Props\SnowBallFightObject\Shaders\PQ_Standard.shader" />
+    <None Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\license_en.txt" />
+    <None Include="Assets\ZRNAssets\PQAssets\Query-Chan-SD\license_jp.txt" />
+    <None Include="Assets\ZRNAssets\Standard Assets\Projectors\Guidelines.txt" />
+    <None Include="Assets\ZRNAssets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
+    <None Include="Assets\ZRNAssets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
